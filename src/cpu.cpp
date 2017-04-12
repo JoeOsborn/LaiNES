@@ -1,6 +1,11 @@
 #include <cstdlib>
 #include <cstring>
+#if 0
 #include <iostream>
+#endif
+#if 0
+#include <klee/klee.h>
+#endif
 #include "apu.hpp"
 #include "cartridge.hpp"
 #include "joypad.hpp"
@@ -233,7 +238,12 @@ void exec()
         case 0xFE: return INC<_abx>() ;
         default:
         {
+          #if 0
+          klee_assert(false);
+          #endif
+          #if 0
           std::cout << "Invalid OPcode! PC: " << PC << " OPcode: 0x" << std::hex << (int)rd(PC-1) << "\n";
+          #endif
           return NOP();
         }
     }
@@ -269,8 +279,9 @@ void run_frame()
 
         exec();
     }
-
+#if 0
     APU::run_frame(elapsed());
+#endif
 }
 
 

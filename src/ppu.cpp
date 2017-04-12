@@ -2,6 +2,7 @@
 #include "cpu.hpp"
 #include "gui.hpp"
 #include "ppu.hpp"
+#include <string.h>
 
 namespace PPU {
 #include "palette.inc"
@@ -184,7 +185,7 @@ void eval_sprites()
             secOam[n].attr = oamMem[i*4 + 2];
             secOam[n].x    = oamMem[i*4 + 3];
 
-            if (++n > 8)
+            if (++n >= 8)
             {
                 status.sprOvf = true;
                 break;
@@ -349,5 +350,12 @@ void reset()
     memset(oamMem, 0x00, sizeof(oamMem));
 }
 
+u32 *get_pixels() {
+  return pixels;
+}
+
+u8 *get_oam_mem() {
+  return oamMem;
+}
 
 }

@@ -1,13 +1,21 @@
+#if 0
 #include <csignal>
+#endif
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#if 0
 #include "Sound_Queue.h"
+#endif
 #include "apu.hpp"
 #include "cartridge.hpp"
 #include "cpu.hpp"
+#if 0
 #include "menu.hpp"
+#endif
 #include "gui.hpp"
+#if 0
 #include "config.hpp"
+#endif
 
 namespace GUI {
 
@@ -15,6 +23,7 @@ namespace GUI {
 const unsigned WIDTH  = 256;
 const unsigned HEIGHT = 240;
 
+#if 0
 // SDL structures:
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -200,13 +209,24 @@ u8 get_joypad_state(int n)
     }
     return j;
 }
-
 /* Send the rendered frame to the GUI */
 void new_frame(u32* pixels)
 {
     SDL_UpdateTexture(gameTexture, NULL, pixels, WIDTH * sizeof(u32));
 }
+#else
+u16 joypad_state = 0;
+u8 get_joypad_state(int n)
+{
+  return (u8)((joypad_state >> n) & 0x00FF);
+}
+void set_joypad_state(u16 v) {
+  joypad_state = v;
+}
+void new_frame(u32* _pixels) {}
+#endif
 
+#if 0
 void new_samples(const blip_sample_t* samples, size_t count)
 {
     soundQueue->write(samples, count);
@@ -307,6 +327,6 @@ void run()
             SDL_Delay((int)(DELAY - frameTime));
     }
 }
-
+#endif
 
 }

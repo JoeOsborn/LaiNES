@@ -88,6 +88,8 @@ template <bool write> u8 access(u16 index, u8 v = 0);
 void set_mirroring(Mirroring mode);
 void step();
 void reset();
-
+  // NB: super unsafe!
+  u32 *get_pixels();
+  u8 *get_oam_mem();
 
 }
